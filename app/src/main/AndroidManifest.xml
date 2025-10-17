@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".VenderActivity" />
+        <activity android:name=".ComprarActivity" />
+        <activity android:name=".AlquilarActivity" />
+        <activity android:name=".PerfilActivity" />
     </application>
 
 </manifest>
