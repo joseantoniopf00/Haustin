@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
 
         // Enlazar elementos del layout
         logoImageView = findViewById(R.id.logoImageView);
-        mainTextView = findViewById(R.id.mainTextView);
+        //mainTextView = findViewById(R.id.mainTextView);
 
         // Opcional: agregar interacción al logo
         logoImageView.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
         });
 
         // Opcional: interacción con el texto
+        /*
         mainTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +40,6 @@ public class MainActivity extends Activity {
                         "El inicio de algo grande",
                         Toast.LENGTH_SHORT).show();
             }
-        });
+        }); */
     }
 }
