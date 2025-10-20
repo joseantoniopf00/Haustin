@@ -22,11 +22,13 @@ public class AlquilarActivity extends AppCompatActivity {
 
     private float initialX, initialY;
     private boolean isDragging = false;
+    private boolean isAnimating = false; // Nueva variable para controlar animaciones
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // ELIMINAR LA ACTIONBAR
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -46,9 +48,18 @@ public class AlquilarActivity extends AppCompatActivity {
         // Cargar la primera propiedad
         loadCurrentProperty();
 
-        // Configurar listeners de los botones
-        btnPasar.setOnClickListener(v -> handlePassAction());
-        btnMeInteresa.setOnClickListener(v -> handleLikeAction());
+        // Configurar listeners de los botones CON ANIMACIÓN
+        btnPasar.setOnClickListener(v -> {
+            if (!isAnimating && currentCardView != null) {
+                animateCardToLeft(); // Animación para botón "Pasar"
+            }
+        });
+
+        btnMeInteresa.setOnClickListener(v -> {
+            if (!isAnimating && currentCardView != null) {
+                animateCardToRight(); // Animación para botón "Me interesa"
+            }
+        });
     }
 
     private void initializePropertyData() {
@@ -84,8 +95,9 @@ public class AlquilarActivity extends AppCompatActivity {
         // Configurar gestos de arrastre en TODA la tarjeta
         setupDragGestures();
 
-        // Resetear overlays
+        // Resetear overlays y estado de animación
         resetOverlays();
+        isAnimating = false;
     }
 
     private void setupDragGestures() {
@@ -93,12 +105,17 @@ public class AlquilarActivity extends AppCompatActivity {
         currentCardView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                // Si hay una animación en curso, ignorar los gestos
+                if (isAnimating) {
+                    return true;
+                }
+
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         initialX = event.getRawX();
                         initialY = event.getRawY();
                         isDragging = false;
-                        return true; // Consumir el evento
+                        return true;
 
                     case MotionEvent.ACTION_MOVE:
                         float deltaX = event.getRawX() - initialX;
@@ -127,13 +144,13 @@ public class AlquilarActivity extends AppCompatActivity {
                                 likeOverlay.setVisibility(View.INVISIBLE);
                                 v.setAlpha(1 - Math.min(Math.abs(deltaX) / 800f, 0.3f));
                             }
-                            return true; // Consumir el evento
+                            return true;
                         }
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                        if (isDragging) {
+                        if (isDragging && !isAnimating) {
                             float finalDeltaX = event.getRawX() - initialX;
 
                             // Umbral para considerar el arrastre como acción
@@ -150,17 +167,55 @@ public class AlquilarActivity extends AppCompatActivity {
                                 resetCardPosition();
                             }
                             isDragging = false;
-                            return true; // Consumir el evento
+                            return true;
                         }
                         resetOverlays();
                         break;
                 }
-                return false; // No consumir el evento (para clicks normales)
+                return false;
             }
         });
     }
 
+    // NUEVO MÉTODO: Animación para botón "Pasar"
+    private void animateCardToLeft() {
+        isAnimating = true;
+        passOverlay.setVisibility(View.VISIBLE);
+        likeOverlay.setVisibility(View.INVISIBLE);
+
+        currentCardView.animate()
+                .translationX(-cardContainer.getWidth())
+                .rotation(-25f)
+                .alpha(0f)
+                .setDuration(400)
+                .withEndAction(() -> {
+                    handlePassAction();
+                    isAnimating = false;
+                })
+                .start();
+    }
+
+    // NUEVO MÉTODO: Animación para botón "Me interesa"
+    private void animateCardToRight() {
+        isAnimating = true;
+        likeOverlay.setVisibility(View.VISIBLE);
+        passOverlay.setVisibility(View.INVISIBLE);
+
+        currentCardView.animate()
+                .translationX(cardContainer.getWidth())
+                .rotation(25f)
+                .alpha(0f)
+                .setDuration(400)
+                .withEndAction(() -> {
+                    handleLikeAction();
+                    isAnimating = false;
+                })
+                .start();
+    }
+
+    // MÉTODO ORIGINAL (para gestos)
     private void animateCardExit(boolean isLike) {
+        isAnimating = true;
         float targetX = isLike ? cardContainer.getWidth() : -cardContainer.getWidth();
         float targetRotation = isLike ? 25f : -25f;
 
@@ -168,13 +223,14 @@ public class AlquilarActivity extends AppCompatActivity {
                 .translationX(targetX)
                 .rotation(targetRotation)
                 .alpha(0f)
-                .setDuration(250)
+                .setDuration(300)
                 .withEndAction(() -> {
                     if (isLike) {
                         handleLikeAction();
                     } else {
                         handlePassAction();
                     }
+                    isAnimating = false;
                 })
                 .start();
     }
