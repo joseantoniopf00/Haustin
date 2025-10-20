@@ -28,6 +28,14 @@
         <activity android:name=".ComprarActivity" />
         <activity android:name=".AlquilarActivity" />
         <activity android:name=".PerfilActivity" />
+        <activity android:name=".PerfilActivity" />
+        <activity android:name=".Perfil.PerfilDetalleActivity" />
+        <activity android:name=".Perfil.PerfilCompradorDetalleActivity" />
+        <activity android:name=".Perfil.PerfilArrendadorDetalleActivity" />
+        <activity android:name=".Perfil.PerfilArrendatarioDetalleActivity" />
+        <activity android:name=".Perfil.PerfilVendedorDetalleActivity" />
+        <activity android:name=".Perfil.HaustinPremiumDetalleActivity" />
+        <activity android:name=".Perfil.AyudaAsistenciaDetalleActivity" />
     </application>
 
 </manifest>
