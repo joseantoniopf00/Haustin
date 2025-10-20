@@ -1,164 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0f2540"
     android:padding="16dp">
 
-    <LinearLayout
+    <!-- Título principal -->
+    <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="Haustin"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
 
-        <!-- Título principal -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Haustin"
-            android:textColor="#FFFFFF"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Subtítulo -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Te recomendamos esta casa por tu estilo de vida"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Imagen de la casa -->
-        <ImageView
-            android:id="@+id/imageViewCasa"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/casa_ejemplo"
-        android:scaleType="centerCrop"
-        android:contentDescription="Imagen de la casa"
+    <!-- Subtítulo -->
+    <TextView
+        android:id="@+id/subtitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Arrastra las propiedades hacia los lados"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_below="@id/titleTextView"
         android:layout_marginBottom="16dp" />
 
-        <!-- Contenedor horizontal para precio y ciudad -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+    <!-- Contenedor para la tarjeta - AHORA SIN RESTRICCIONES DE SCROLL -->
+    <FrameLayout
+        android:id="@+id/cardContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/subtitleTextView"
+        android:layout_above="@+id/buttonsLayout"
+        android:layout_marginBottom="24dp" />
 
-            <!-- Precio -->
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1.200$/mes"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+    <!-- Overlay para "Me interesa" (derecha) -->
+    <TextView
+        android:id="@+id/likeOverlay"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="ME INTERESA"
+        android:textColor="#4CAF50"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="#804CAF50"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:rotation="15" />
 
-            <!-- Recuadro naranja para ciudad -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ciudad"
-                android:background="#FF9800"
-                android:textColor="#212121"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+    <!-- Overlay para "Pasar" (izquierda) -->
+    <TextView
+        android:id="@+id/passOverlay"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="PASAR"
+        android:textColor="#F44336"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="#80F44336"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:rotation="-15" />
 
-        </LinearLayout>
+    <!-- Botones de acción -->
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="16dp"
+        android:gravity="center">
 
-        <!-- Contenedor para las tres características -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp">
-
-            <!-- Característica 1 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Perfecto para familias"
-                android:background="#80FF9800"
-            android:textColor="#FFFFFF"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="6dp"
-            android:textSize="14sp"
-            android:layout_marginBottom="8dp" />
-
-            <!-- Característica 2 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ideal para trabajar"
-                android:background="#80FF9800"
-                android:textColor="#FFFFFF"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
-                android:textSize="14sp"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Característica 3 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vistas espectaculares"
-                android:background="#80FF9800"
-                android:textColor="#FFFFFF"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <!-- Texto de habitaciones y metros -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="3 hab y 80m"
-            android:textColor="#FFFFFF"
+        <!-- Botón Pasar -->
+        <Button
+            android:id="@+id/btnPasar"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="PASAR"
+            android:textColor="#FF9800"
+            android:background="@drawable/button_pasar_background"
+            android:layout_marginEnd="8dp"
             android:textSize="16sp"
-            android:layout_marginBottom="24dp" />
+            android:textStyle="bold" />
 
-        <!-- Contenedor horizontal para los botones -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="16dp">
-
-
-            <Button
-                android:id="@+id/btnPasar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Pasar"
-                android:background="#FFFFFF"
-                android:textColor="#0f2540"
-                android:layout_marginEnd="8dp"
-                android:textStyle="bold" />
-
-
-            <Button
-                android:id="@+id/btnMeInteresa"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Me interesa"
-                android:background="#FF9800"
-                android:textColor="#212121"
-                android:layout_marginStart="8dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+        <!-- Botón Me interesa -->
+        <Button
+            android:id="@+id/btnMeInteresa"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="ME INTERESA"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_interesado_background"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-</ScrollView>
+</RelativeLayout>
